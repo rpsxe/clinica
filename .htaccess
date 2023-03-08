@@ -1,0 +1,45 @@
+RewriteEngine On
+
+RewriteCond %(REQUEST_FILENAME) !-f
+RewriteCond %(REQUEST_FILENAME) !-d
+
+<files ~ "^.*\.([Hh][Tt][Aa])">
+order allow,deny
+deny from all
+satisfy all
+</files>
+
+
+
+
+RewriteRule ^login$ ./index.php
+RewriteRule ^([1-5])$ ./agenda.php?dia=$1
+RewriteRule ^agenda$ ./agenda-provisoria.php
+RewriteRule ^inicio$ ./home.php
+RewriteRule ^cadastrar$ ./form.php
+RewriteRule ^registros$ ./registros.php
+RewriteRule ^relatorio$ ./relatorio.php
+RewriteRule ^triagens$ ./lista_triagem.php
+RewriteRule ^agenda-triagens$ ./agenda_triagem.php
+RewriteRule ^administrativo$ ./num-serv.php
+RewriteRule ^p(..*)-([0-9]+)$ ./perfil.php?$nome=$1&id=$2
+RewriteRule ^u([0-9]+)$ ./update.php?id=$1
+RewriteRule ^atualizar-horario([0-9]+)$ ./agenda-update.php?id=$1
+RewriteRule ^historico-(..*)-([0-9]+)$ ./includes/historico-assistido.php?nome=$1&id=$2
+RewriteRule ^consulta-([0-9]+)$ ./reg-consulta.php?id=$1
+RewriteRule ^evolucao-([0-9]+)$ ./ficha-evolucao.php?id=$1
+RewriteRule ^busca-cpf$ ./consulta.php
+RewriteRule ^pesquisa$ ./buscaresultado.php
+RewriteRule ^minha-agenda$ ./minha-agenda.php
+RewriteRule ^sair$ ./header/logout.php
+RewriteRule ^diarios$ ./reg-diarios.php
+RewriteRule ^admin$ ./admin.php
+RewriteRule ^lista-espera$ ./lista-espera.php
+RewriteRule ^relatorio-doc$ ./relmes.php
+RewriteRule ^lista-servsoc$ ./lista-servsoc.php
+RewriteRule ^lista-avaliacao$ ./lista-avaliacao.php
+RewriteRule ^lista-convenios$ ./lista-convenios.php
+RewriteRule ^relatorio-listaespera$ ./rel-listaespera.php
+RewriteRule ^relatorio-atendimentos-([0-9]+)-([0-9]+)-(..*)$ ./relatorio-pdf.php?prof=$1&tempo=$2&date=$3
+
+ErrorDocument 404 /clinica1/404.html

@@ -1,0 +1,58 @@
+<?php
+$dataComp = date('Y/m/d', strtotime('-7 days'));
+$data = date('Y/m/d');
+	$select = "SELECT agenda.*, atendimentos.*, atendimentos.id as id_at, profissionais.nome as p_nome, servicos.nome as serv_nome, assistidos.nome as assist_nome
+		FROM ((((agenda
+			INNER JOIN assistidos ON agenda.id_assist = assistidos.id_assist)
+			INNER JOIN profissionais ON agenda.id_prof = profissionais.id)
+			INNER JOIN servicos ON agenda.id_serv = servicos.id)
+			INNER JOIN atendimentos ON agenda.id=atendimentos.id_agenda) WHERE data BETWEEN '$dataComp' AND '$data' ORDER BY id_at DESC";
+				$result=$conexao->prepare($select);
+				$result->execute();
+				$contar= $result->rowCount();
+				if($contar>0){ $num=$contar;?>
+<div class="table-responsive">  				
+<table class="table">
+    <thead style="background: white;">
+      <tr >
+		<th> </th>
+        <th>Assistido</th>
+        <th>Profissional</th>
+        <th>Atendimento</th>
+		<th>Estado</th>
+        <th>Data</th>
+      </tr>
+    </thead>
+<tbody>
+<?php
+	while ($linha = $result->FETCH(PDO::FETCH_OBJ)) { 
+		$tipo=$linha->tipo;
+		$estado = $linha->estado;
+?>
+      <tr <?php if( $estado=="Presente" ){ echo 'class="success"';}if ($estado=="Falta"){echo 'class="danger"';}if ($estado=="Inserido"){echo 'class="active"';}if($estado=="Falta Justificada"){echo 'class="warning"';}if($estado=="Desligado"){echo 'class="info"';}?>>
+		<td><?php echo $num; ?></td>
+        <td><a href="perfil.php?id=<?php echo $linha->id_assist;?>"><p><dl><?php	echo $linha->assist_nome; ?></p></a> </td>
+        <td><?php	echo  $linha->p_nome; ?></td>
+        <td><?php	echo $linha->serv_nome; ?></td>
+		<td><?php echo $estado; ?></td>
+		<td><?php $data=$linha->data; echo date('d/m/Y',  strtotime($data)) ?></td>
+      </tr>
+<?php
+	//Informação de atividade
+	if($tipo=="SMED" && $estado=="Presente"){$smed++;}
+	if($tipo=="Saúde" && $estado=="Presente"){$saude++;}
+	if($estado=="Presente"){$cont++;}
+	if($estado=="Falta"){$falta++;}
+	if($estado=="Falta Justificada"){$fj++;}
+	if($estado=="Desligado"){$desliga++;}
+		$num--;}	// FIM IF COMPARAR
+	} // FIM WHILE
+else{echo '<center><br><h1>Nenhum dado encontrado!';} // FIM IF $CONTAR
+	/*	echo "<h3>Número total de atendimentos: ", $cont;
+	echo "</h3><h4>Convênio: ",$saude," saúde e ", $smed, " educação";
+	echo "<br>Número de desligamentos: ",$desliga;
+	echo "<br>Número de faltas: ",$falta, " e faltas justificadas: ", $fj; */
+?>
+    </tbody>
+  </table>
+</div>
