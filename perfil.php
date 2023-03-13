@@ -276,12 +276,12 @@ include("logs/logs.php");
 							</div>
 						</a>	
 					<?php } ?>				
-						<a href="fa-branco.php?id=<?php echo $id; ?>" class="link-modal" target="_blank">
-							<div class="col-sm-6 text-center link-modal"  style="padding: 20px;">
-								<i class="fa fa-file-text fa-5x" aria-hidden="true"></i><br>
-								Ficha de Atendimento em Branco			
-							</div>
-						</a>					
+					<a href="fa-branco.php?id=<?php echo $id; ?>" class="link-modal" target="_blank">
+						<div class="col-sm-6 text-center link-modal"  style="padding: 20px;">
+							<i class="fa fa-file-text fa-5x" aria-hidden="true"></i><br>
+							Ficha de Atendimento em Branco			
+						</div>
+					</a>					
 				</div>
 				<div class="row text-center">
 					<?php include("includes/num-atendimentos.php"); ?>
@@ -748,11 +748,11 @@ include("logs/logs.php");
 					<div class="modal-body">
 						<h1>Registrar Consulta</h1><br>
 						<p>Aqui serão registradas consultas que não estão na agenda.</p><br>
-						<form id="agenda" action="consulta-<?php echo $id;?>" method="post">
-							<input type="hidden" name="id_assist" id="idAssist" value="<?php echo $linha->id; ?>">
+						<form id="agenda" action="grava-atendimento.php" method="post">
+							<input type="hidden" name="id_assist" id="idAssist" value="<?php echo $id_assist; ?>">
 							<div class="form-group">
 								<div class="col-sm-3">
-									<select class="form-control" name="servicos" id="sel_servico" required>
+									<select class="form-control" name="id_serv" id="sel_servico" required>
 										<option selected disabled>  </option>
 										<?php
 				//AQUI VOU SELECIONAR TODOS OS SERVIÇOS
@@ -776,11 +776,11 @@ include("logs/logs.php");
 									</select>
 								</div>
 								<div class="col-sm-3">											
-									<select class="form-control resultado_profissional" name="profissionais" required>				
+									<select class="form-control resultado_profissional" name="id_prof" required>				
 									</select>
-								</div>
-								<div class="col-sm-3">
-									<select name="convenio" class="form-control" required>
+								</div>								
+								<div class="col-sm-2">
+									<select name="conv" class="form-control" required>
 										<option selected disabled> </option>
 										<option value="Saúde">Saúde</option>
 										<option value="SMED">Educação</option>
@@ -792,7 +792,7 @@ include("logs/logs.php");
 										<option value="EJudicial">Encaminhamento Judicial</option>
 									</select>
 								</div>
-								<div class="col-sm-3">
+								<div class="col-sm-2">
 									<select name="status" class="form-control" required>
 										<option selected value="Presente">Presente</option>
 										<option value="Falta">Falta</option>
@@ -807,7 +807,11 @@ include("logs/logs.php");
 										<option value="Festividades">Festividades</option>
 										<option value="Informações Sobre">Informações Sobre</option>
 									</select>
-								</div><br><br>
+								</div>
+								<div class="col-sm-2">											
+									<input type="date" name="data" class="form-control" >
+								</div>
+								<br><br>
 								<center><input type="submit" class="btn btn-primary" name="submit" value="Enviar">
 								</center></div>
 							</form>

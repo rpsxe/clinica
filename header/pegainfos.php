@@ -71,6 +71,7 @@ try{
 			$escola=$linha->escola;
 			$autista=$linha->autista;
 			$pasta=$linha->pasta;
+			$id_assist = $linha->id_assist;
 }
 	}else{
 		header ("Refresh: 0, registros"); exit;
